@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean; npm run copy-views",
+    "build": "npm run clean",
     "clean": "rm -rf dist",
-    "copy-views": "cp -r public/ dist/",
     "start": "node server.js"
   },
   "keywords": [],
