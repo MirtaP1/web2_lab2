@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 
         <div>
             <h2>XSS Napad</h2>
-            <h4>Podaci o kolačiću i sesiji :</h4>
+            <h4>Podaci o kolačiću:</h4>
             <p>${displayedUserInput}</p>
             <form action="/setcookie" method="POST">
                 <label for="userInput">Unesite podatke:</label>
@@ -168,6 +168,6 @@ app.get('/admin', requiresAuth(), isAdmin, (req, res) => {
 
 app.post('/setcookie', (req, res) => {
     const { userInput } = req.body;
-    res.cookie('userInput', userInput, { httpOnly: false });
+    res.cookie('userInput', userInput, { httpOnly: !xssEnabled });
     res.redirect('/');
 });
