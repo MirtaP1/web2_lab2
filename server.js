@@ -54,6 +54,11 @@ app.use(session({
  }));
 app.use(cookieParser());
 
+app.use(function (req, res, next) {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+});
+
 let xssEnabled = false;
 let accessControlEnabled = false;
 
@@ -134,11 +139,6 @@ app.get('/login', (req, res) => {
     } else {
         res.redirect('/');
     }
-});
-
-app.get('/toggle-admin', (req, res) => {
-    req.session.isAdmin = !req.session.isAdmin;
-    res.redirect('/');
 });
 
 app.get('/toggle-access-control', (req, res) => {
