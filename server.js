@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
     const user = req.oidc.user;
     
     res.cookie('userInput', sanitizedUserInput, { 
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'Strict',
     });
