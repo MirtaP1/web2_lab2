@@ -82,10 +82,15 @@ app.get('/', (req, res) => {
     console.log('Jedinstveni ID korisnika: ', req.session.user);
 
     res.send(`
-        <h1>Sigurnosne ranjivosti</h1>
+        <h1>Sigurnosni napadi</h1>
 
         <div>
             <h2>XSS Napad</h2>
+            <p style="font-size: 0.8em; line-height: 1.1em; margin-bottom: 10px; padding: 8px; border: 1px solid #000000;">Upute:<br>
+            Kada checkbox nije označen, uneseni podaci su zaštićeni od xxs napada<br>
+            Kada je checkbox označen, uneseni podaci nisu zaštićeni od xxs napada<br>
+            Npr. kada checkbox nije označen i korisnik unese podatke, unos korisnika je ispisan ispod podaci o kolačiću i unos je zaštićen od xxs napada<br>
+            Npr. kada checkbox nije označen i korisnik unese podatke, unos korisnika prikazuje se direktno na stranici i dolazi do xxs napada</p>
             <h4>Podaci o kolačiću:</h4>
             <p>${displayedUserInput}</p>
             <form action="/setcookie" method="POST">
@@ -96,9 +101,20 @@ app.get('/', (req, res) => {
             <input type="checkbox" id="xssSwitch" ${xssEnabled ? 'checked' : ''} onchange="toggleXSS()"> 
             <label for="xssSwitch">Omogući XSS ranjivost</label>
         </div>
-
+        <p style="border: 1px dashed #000000; margin: 20px 0;"></p>
         <div>
             <h2>Loša kontrola pristupa</h2>
+            <p style="font-size: 0.8em; line-height: 1.1em; margin-bottom: 10px; padding: 8px; border: 1px solid #000000;">Upute: <br>
+            Kada checkbox nije označen, uneseni podaci su zaštićeni od ranjivost loše kontrole pristupa<br>
+            Kada je checkbox označen, uneseni podaci nisu zaštićeni od ranjivost loše kontrole pristupa<br>
+            Korisnik se može prijaviti klikom na Prijava, ako je korisnik prijavljen piše Prijavljeni ste kao “email korisnika”, klikom na Odjava korisnik se odjavi<br>
+            Ako korisnik klikne na Idi na admin stranicu, a nije prijavljen traži se od njega prijava prije nego ga se preusmjeri na admin stranicu<br>
+            Ako korisnik klikne na Idi na admin stranicu, a prijavljen je, korisnika se preusmjeri na admin stranicu<br>
+            Ako checkbox nije označen i korisnik je admin, prikazuju mu se podaci na admin stranici<br>
+            Ako checkbox nije označen i korisnik nije admin, ne prikazuju mu se podaci na admin stranici nego dolazi do greške 403 i prikazuje mu se poruka o zabranjenom pristupu<br>
+            Ako je checkbox označen i korisnik je admin, prikazuju mu se podaci na admin stranici<br>
+            Ako je checkbox označen i korisnik nije admin, prikazuju mu se podaci na admin stranici<br>
+            </p>
             ${isAuthenticated 
                 ? `<p>Prijavljeni ste kao ${user.name}</p>
                    <a href="/logout">Odjava</a>`
